@@ -1,11 +1,11 @@
 package com.example.inteliheads.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inteliheads.R
@@ -21,6 +21,7 @@ class ProductAdapter( val list: ArrayList<ItemInfo>) :
         val itemPrice: TextView = view.findViewById(R.id.mrp)
         val itemWeight: TextView = view.findViewById(R.id.quantity)
         val itemImage: ImageView = view.findViewById(R.id.display)
+        val llContent:LinearLayout=view.findViewById(R.id.llContent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -28,20 +29,21 @@ class ProductAdapter( val list: ArrayList<ItemInfo>) :
             .inflate(R.layout.product_recycler_single_row, parent, false)
         return ProductViewHolder(view)
     }
+    override fun getItemCount(): Int {
+        return list.size
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val pdt = list[position]
         holder.itemName.text = "Name  : " + pdt.item_name
-        holder.itemPrice.text = "Price : " + pdt.item_price
+        holder.itemPrice.text = "Price : " + pdt.item_price + "/-"
         holder.itemWeight.text = "Qty   : " + pdt.item_qty +" "+ pdt.item_qty_type
         Picasso.get().load(pdt.item_img_url).error(R.drawable.ic_launcher_background)
             .into(holder.itemImage)
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+
 }
 
 

@@ -37,6 +37,8 @@ class Product : Fragment() {
     lateinit var progressLayout: RelativeLayout
     lateinit var progressBar: ProgressBar
     lateinit var productAdapter: ProductAdapter
+    var itemList = arrayListOf<ItemInfo>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,13 +46,12 @@ class Product : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_product, container, false)
 
-        productRecycler = view.findViewById(R.id.productRecycler)
         layoutManager = LinearLayoutManager(activity)
+        productRecycler = view.findViewById(R.id.productRecycler)
         progressBar = view.findViewById(R.id.progressBar)
         progressLayout = view.findViewById(R.id.progressLayout)
         progressLayout.visibility = View.VISIBLE
-        val itemList = arrayListOf<ItemInfo>()
-        val queue = Volley.newRequestQueue(activity)
+        val queue = Volley.newRequestQueue(activity as Context)
         val url = "https://run.mocky.io/v3/3db7e1e8-614f-41ba-b4ba-8d809d842d2c"
 
         if (com.example.inteliheads.util.ConnectivityManager()
@@ -68,9 +69,7 @@ class Product : Fragment() {
                             val dataObj = data.getJSONObject(i)
                             for (j in 0 until data.length()) {
                                 val variant = dataObj.getJSONArray("variants")
-                                             // ^ data nu potu try panalam
                                 val variantObj = variant.getJSONObject(j)
-
 
                                 val listOfInfo = ItemInfo(
                                     dataObj.getString("name"),
@@ -90,7 +89,8 @@ class Product : Fragment() {
 
 
                     } catch (e: Exception) {
-                        Toast.makeText(activity, "some error in volley", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "some error in volley", Toast.LENGTH_SHORT)
+                            .show()  //this line
                     }
                 },
                 Response.ErrorListener {
