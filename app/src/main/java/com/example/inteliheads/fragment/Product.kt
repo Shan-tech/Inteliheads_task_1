@@ -33,17 +33,16 @@ import java.util.*
 class Product : Fragment() {
 
     lateinit var productRecycler: RecyclerView
+    lateinit var productAdapter: ProductAdapter
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var progressLayout: RelativeLayout
     lateinit var progressBar: ProgressBar
-    lateinit var productAdapter: ProductAdapter
     var itemList = arrayListOf<ItemInfo>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_product, container, false)
 
         layoutManager = LinearLayoutManager(activity)
@@ -51,6 +50,8 @@ class Product : Fragment() {
         progressBar = view.findViewById(R.id.progressBar)
         progressLayout = view.findViewById(R.id.progressLayout)
         progressLayout.visibility = View.VISIBLE
+
+
         val queue = Volley.newRequestQueue(activity as Context)
         val url = "https://run.mocky.io/v3/3db7e1e8-614f-41ba-b4ba-8d809d842d2c"
 
@@ -62,9 +63,9 @@ class Product : Fragment() {
                 url,
                 null,
                 Response.Listener {
+                    progressLayout.visibility = View.GONE
                     try {
                         val data = it.getJSONArray("data")
-                        progressLayout.visibility = View.GONE
                         for (i in 0 until data.length()) {
                             val dataObj = data.getJSONObject(i)
                             for (j in 0 until data.length()) {
@@ -83,6 +84,7 @@ class Product : Fragment() {
                                 productAdapter = ProductAdapter(itemList)
                                 productRecycler.adapter = productAdapter
                                 productRecycler.layoutManager = layoutManager
+                                break
 
                             }
                         }
@@ -90,12 +92,12 @@ class Product : Fragment() {
 
                     } catch (e: Exception) {
                         Toast.makeText(activity, "some error in volley", Toast.LENGTH_SHORT)
-                            .show()  //this line
+                            .show()
                     }
                 },
                 Response.ErrorListener {
                     if (activity != null) {
-                        Toast.makeText(activity, "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Listener error", Toast.LENGTH_SHORT).show()
                     }
                 }) {
                 override fun getHeaders(): MutableMap<String, String> {
@@ -109,17 +111,19 @@ class Product : Fragment() {
             val dialogue = AlertDialog.Builder(activity as Context)
             dialogue.setTitle("Connectivity Error")
             dialogue.setMessage("No internet connection")
-            dialogue.setPositiveButton("open settings") { text, lisener ->
+            dialogue.setPositiveButton("open settings") { _, _ ->
                 val settings = Intent(Settings.ACTION_WIRELESS_SETTINGS)
                 startActivity(settings)
                 activity?.finish()
             }
-            dialogue.setNegativeButton("Exit") { text, listner ->
+            dialogue.setNegativeButton("Exit") { _, _ ->
                 activity?.finishAffinity() //ActivityCompat.finishAffinity(activity as Activity)
             }
             dialogue.create()
             dialogue.show()
         }
+
+
         return view
     }
 

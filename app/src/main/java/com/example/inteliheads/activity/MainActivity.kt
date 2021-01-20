@@ -1,38 +1,49 @@
 package com.example.inteliheads.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.FrameLayout
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.inteliheads.R
-import com.example.inteliheads.fragment.category
+import com.example.inteliheads.fragment.Category
 import com.example.inteliheads.fragment.Product
 import com.google.android.material.bottomnavigation.BottomNavigationView
-                                                    //Toolbar shd be fixed
+
 class MainActivity : AppCompatActivity() {
-    lateinit var btmNavg: BottomNavigationView
-    //lateinit var toolbar:Toolbar
+    private lateinit var btmNavg: BottomNavigationView
+    lateinit var frameLayout: FrameLayout
+    private lateinit var toolbar: Toolbar
+    private var previousMenuItem: MenuItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.title = "Dashboard"
-        supportActionBar?.hide()
 
-        //toolbar = findViewById(R.id.toolbar)
-       // setToolbar()
         btmNavg = findViewById(R.id.bottom_nav_view)
+        frameLayout = findViewById(R.id.frameLayout)
         val bottomNavigationView = BottomNavigationView.OnNavigationItemSelectedListener {
+            if (previousMenuItem != null) {
+                previousMenuItem?.isChecked = false
+                it.isChecked = true
+            }
+            it.isCheckable = true
+            previousMenuItem = it
             when (it.itemId) {
                 R.id.pdt -> {
-                    replaceFragment(Product())
                     supportActionBar?.title = "Product"
 
+                    replaceFragment(Product())
                     true
                 }
-
                 R.id.category -> {
-                    replaceFragment(category())
                     supportActionBar?.title = "Category"
-
+                    replaceFragment(Category())
 
                     true
                 }
@@ -43,17 +54,13 @@ class MainActivity : AppCompatActivity() {
         btmNavg.setOnNavigationItemSelectedListener(bottomNavigationView)
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
         val fragTransaction = supportFragmentManager.beginTransaction()
-        //setSupportActionBar(toolbar)
         fragTransaction.replace(R.id.frameLayout, fragment)
+        fragTransaction.addToBackStack(null)
         fragTransaction.commit()
     }
 
-    /*fun setToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Dashboard"
-    }*/
+
+
 }

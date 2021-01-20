@@ -1,12 +1,13 @@
 package com.example.inteliheads.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 
 class ConnectivityManager {
 
-    // @SuppressLint("ServiceCast")
+     @SuppressLint("ServiceCast")
     fun checkConnectivity(context: Context):Boolean{
         val connectivityManager=context.getSystemService(Context.CONNECTIVITY_SERVICE)as ConnectivityManager
         val activeNetwork: NetworkInfo?=connectivityManager.activeNetworkInfo

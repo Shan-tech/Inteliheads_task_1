@@ -5,18 +5,39 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainactivity_bg"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/design_default_color_secondary"
+        android:minHeight="?attr/actionBarSize"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Empty activity with bottom navigation View"
+        android:textColor="@color/black"
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="12dp" />
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Click product"
-    android:textSize="20dp"
-    android:textColor="@color/white"
+    android:text="Click on product to navigate"
+    android:textSize="20sp"
+    android:textColor="@color/black"
     android:layout_marginTop="250dp"
-    android:layout_marginLeft="20dp"/>
+    android:layout_marginLeft="20dp"
+    android:layout_marginStart="20dp" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,13 +46,7 @@
         app:menu="@menu/bottom_nav"
         android:layout_gravity="bottom"/>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+
 
 
 </FrameLayout>

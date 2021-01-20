@@ -1,25 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.Product"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".fragment.Product">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_secondary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Product" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="?attr/actionBarSize"
+
+        />
+
     <RelativeLayout
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_centerInParent="true"
-            />
+            android:layout_centerInParent="true" />
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
+
+

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.inteliheads.R
 
 
-class category : Fragment() {
+class Category : Fragment() {
 
 
     override fun onCreateView(

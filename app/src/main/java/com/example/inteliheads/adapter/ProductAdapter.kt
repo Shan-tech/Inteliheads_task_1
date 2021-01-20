@@ -13,7 +13,7 @@ import com.example.inteliheads.data.ItemInfo
 import com.squareup.picasso.Picasso
 
 
-class ProductAdapter( val list: ArrayList<ItemInfo>) :
+class ProductAdapter(private val list: ArrayList<ItemInfo>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -21,7 +21,6 @@ class ProductAdapter( val list: ArrayList<ItemInfo>) :
         val itemPrice: TextView = view.findViewById(R.id.mrp)
         val itemWeight: TextView = view.findViewById(R.id.quantity)
         val itemImage: ImageView = view.findViewById(R.id.display)
-        val llContent:LinearLayout=view.findViewById(R.id.llContent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -29,6 +28,7 @@ class ProductAdapter( val list: ArrayList<ItemInfo>) :
             .inflate(R.layout.product_recycler_single_row, parent, false)
         return ProductViewHolder(view)
     }
+
     override fun getItemCount(): Int {
         return list.size
     }
@@ -36,13 +36,12 @@ class ProductAdapter( val list: ArrayList<ItemInfo>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val pdt = list[position]
-        holder.itemName.text = "Name  : " + pdt.item_name
-        holder.itemPrice.text = "Price : " + pdt.item_price + "/-"
-        holder.itemWeight.text = "Qty   : " + pdt.item_qty +" "+ pdt.item_qty_type
+        holder.itemName.text =  pdt.item_name
+        holder.itemPrice.text = "Rs  : " + pdt.item_price + "/-"
+        holder.itemWeight.text = "Qty : " + pdt.item_qty +" "+ pdt.item_qty_type
         Picasso.get().load(pdt.item_img_url).error(R.drawable.ic_launcher_background)
             .into(holder.itemImage)
     }
-
 
 }
 
